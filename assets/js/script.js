@@ -82,29 +82,41 @@ $(".time-table").on("click", ".event-section", function() {
 
 
 // When done with entering text, change it back into the span element or whatever
-$(".time-table").on("blur", "textarea", function() {
+// $(".time-table").on("blur", "textarea", function() {
+//     // Get old value
+//     var task = $(this).val();
+//     // Make a new <p> element.
+//     var taskP = $("<p>").addClass("task-p").text(task);
+//     var taskTime = $(this)
+//         .closest(".time-table-row")
+//         .attr("data-time")
+//         .trim()
+//         .replace(":00", "");
+//     schedule[taskTime] = task;
+//     $(this).replaceWith(taskP);
+//     taskP.trigger("focus");
+//     // This call seems to be what fucks up the schedule
+//     saveSchedule();
+// });
 
-    // Get old value
-    var task = $(this).val();
-    // Make a new <p> element.
-    var taskP = $("<p>").addClass("task-p").text(task);
+$(".time-table").on("click", ".save-section", function() {
+    var taskInputEl = $(this)
+        .parent()
+        .find(".event-section")
+        .find("textarea");
+    var taskText = taskInputEl.val();
+    console.log(taskText);
+    var taskP = $("<p>").addClass("task-p").text(taskText);
     var taskTime = $(this)
         .closest(".time-table-row")
         .attr("data-time")
         .trim()
         .replace(":00", "");
-    // 
-    // 
-
-    schedule[taskTime] = task;
-    // 
-
-    $(this).replaceWith(taskP);
+    schedule[taskTime] = taskText;
+    $(taskInputEl).replaceWith(taskP);
     taskP.trigger("focus");
-    // This call seems to be what fucks up the schedule
     saveSchedule();
-
-});
+})
 
 setInterval(function() {
     $(".dateHeader")
